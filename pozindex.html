@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VPS Sunucu Satış | Hızlı ve Güvenilir</title>
+  <meta name="description" content="SSD NVMe altyapı, KVM sanallaştırma, DDoS korumalı uygun fiyatlı VPS paketleri. Anında teslim, 7/24 destek." />
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .glass { backdrop-filter: blur(10px); background: rgba(255,255,255,.7); }
+    .dark .glass { background: rgba(17,24,39,.6); }
+    .fade-enter { opacity: 0; transform: translateY(8px); }
+    .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity .25s ease, transform .25s ease; }
+    .fade-exit { opacity: 1; transform: translateY(0); }
+    .fade-exit-active { opacity: 0; transform: translateY(8px); transition: opacity .2s ease, transform .2s ease; }
+    .btn { @apply px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-800 dark:from-slate-950 dark:to-slate-900 dark:text-slate-100">
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-50 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200/60 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <a href="#" id="brandLink" class="flex items-center gap-3 font-semibold text-xl">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow">
+          <i class="fa-solid fa-server"></i>
+        </span>
+        <span>Pozitif VPS</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#ozellikler" class="hover:text-sky-600">Özellikler</a>
+        <button id="paketlerBtn" class="hover:text-sky-600">Paketler</button>
+        <a href="#sss" class="hover:text-sky-600">SSS</a>
+        <a href="#iletisim" class="hover:text-sky-600">İletişim</a>
+        <button id="currencyToggle" class="px-3 py-1 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800" title="Para Birimi">TRY</button>
+        <button id="themeToggle" class="px-3 py-1 rounded-xl border border-slate-300 dark:border-slate-700" title="Tema">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <!-- Cart -->
+        <button id="cartBtn" class="relative px-3 py-1 rounded-xl border border-slate-300 dark:border-slate-700">
+          <i class="fa-solid fa-shopping-cart"></i>
+          <span id="cartCount" class="absolute -top-2 -right-2 text-[10px] px-1.5 py-0.5 rounded-full bg-sky-600 text-white">0</span>
+        </button>
+      </nav>
+      <button id="mobileMenuBtn" class="md:hidden text-2xl"><i class="fa-solid fa-bars"></i></button>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-200 dark:border-slate-800">
+      <div class="px-4 py-3 flex flex-col gap-3">
+        <a href="#ozellikler" class="hover:text-sky-600">Özellikler</a>
+        <button id="paketlerBtnM" class="text-left hover:text-sky-600">Paketler</button>
+        <a href="#sss" class="hover:text-sky-600">SSS</a>
+        <a href="#iletisim" class="hover:text-sky-600">İletişim</a>
+        <div class="flex items-center gap-2">
+          <button id="currencyToggleM" class="px-3 py-1 rounded-xl border border-slate-300 dark:border-slate-700" title="Para Birimi">TRY</button>
+          <button id="themeToggleM" class="px-3 py-1 rounded-xl border border-slate-300 dark:border-slate-700"><i class="fa-solid fa-moon"></i></button>
+          <button id="cartBtnM" class="px-3 py-1 rounded-xl border border-slate-300 dark:border-slate-700 flex items-center gap-2">
+            <i class="fa-solid fa-shopping-cart"></i><span id="cartCountM" class="text-xs">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ANA İÇERİK KAPSAYICI (Home görünümü) -->
+  <main id="homeView">
+    <!-- HERO -->
+    <section class="relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+              Hızlı, Güvenilir ve <span class="text-sky-600">Anında Teslim</span> VPS
+            </h1>
+            <p class="mt-4 text-lg text-slate-600 dark:text-slate-300">NVMe SSD, KVM sanallaştırma, tam kök erişimi ve 7/24 teknik destek. Projelerinizi bir üst seviyeye taşıyın.</p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <button id="ctaPaketler" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-sky-600 text-white hover:bg-sky-700 shadow">
+                <i class="fa-solid fa-cart-shopping text-xl"></i> Paketleri Gör
+              </button>
+              <a href="#iletisim" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <i class="fa-brands fa-whatsapp text-xl"></i> Teklif Al
+              </a>
+            </div>
+            <div class="mt-6 flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
+              <span class="inline-flex items-center gap-2"><i class="fa-solid fa-shield-halved text-xl"></i> DDoS Koruma</span>
+              <span class="inline-flex items-center gap-2"><i class="fa-solid fa-rocket text-xl"></i> NVMe SSD</span>
+              <span class="inline-flex items-center gap-2"><i class="fa-solid fa-gauge-high text-xl"></i> 1 Gbps Port</span>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="glass rounded-3xl p-6 md:p-8 shadow-2xl border border-slate-200/60 dark:border-slate-800">
+              <div class="grid grid-cols-2 gap-4 text-center">
+                <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                  <i class="fa-solid fa-microchip text-3xl mb-2"></i>
+                  <div class="text-sm text-slate-500 dark:text-slate-400">vCPU</div>
+                  <div class="text-2xl font-bold">AMD EPYC</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                  <i class="fa-solid fa-memory text-3xl mb-2"></i>
+                  <div class="text-sm text-slate-500 dark:text-slate-400">RAM</div>
+                  <div class="text-2xl font-bold">ECC DDR4</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                  <i class="fa-solid fa-hard-drive text-3xl mb-2"></i>
+                  <div class="text-sm text-slate-500 dark:text-slate-400">Disk</div>
+                  <div class="text-2xl font-bold">NVMe SSD</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                  <i class="fa-solid fa-network-wired text-3xl mb-2"></i>
+                  <div class="text-sm text-slate-500 dark:text-slate-400">Port</div>
+                  <div class="text-2xl font-bold">1 Gbps</div>
+                </div>
+              </div>
+              <p class="mt-4 text-center text-sm text-slate-500 dark:text-slate-400">Türkiye & Avrupa lokasyon seçenekleri, /30 IPv4, anında kurulum.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÖZELLİKLER -->
+    <section id="ozellikler" class="py-16 border-t border-slate-200/70 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 class="text-3xl font-bold mb-8">Öne Çıkan Özellikler</h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow">
+            <i class="fa-solid fa-gauge-high text-4xl mb-4"></i>
+            <h3 class="font-semibold text-lg">Yüksek Performans</h3>
+            <p class="text-slate-600 dark:text-slate-400 mt-1">Zen tabanlı CPU'lar, NVMe depolama ve modern kernel optimizasyonları.</p>
+          </div>
+          <div class="rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow">
+            <i class="fa-solid fa-shield-halved text-4xl mb-4"></i>
+            <h3 class="font-semibold text-lg">DDoS Koruma</h3>
+            <p class="text-slate-600 dark:text-slate-400 mt-1">Ağ seviyesinde anomali tespiti ve otomatik filtreleme.</p>
+          </div>
+          <div class="rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow">
+            <i class="fa-solid fa-screwdriver-wrench text-4xl mb-4"></i>
+            <h3 class="font-semibold text-lg">Tam Yetki</h3>
+            <p class="text-slate-600 dark:text-slate-400 mt-1">Root erişimi, ISO ile kurulum, anlık snapshot ve yeniden başlatma.</p>
+          </div>
+          <div class="rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow">
+            <i class="fa-solid fa-headset text-4xl mb-4"></i>
+            <h3 class="font-semibold text-lg">7/24 Destek</h3>
+            <p class="text-slate-600 dark:text-slate-400 mt-1">Ticket, e‑posta ve WhatsApp üzerinden anlık destek.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SSS -->
+    <section id="sss" class="py-16 bg-slate-50/60 dark:bg-slate-950/40 border-y border-slate-200/70 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 class="text-3xl font-bold mb-6">Sık Sorulan Sorular</h2>
+        <div class="space-y-3">
+          <details class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900">
+            <summary class="cursor-pointer font-medium">Siparişten sonra kurulum ne kadar sürer?</summary>
+            <p class="mt-2 text-slate-600 dark:text-slate-300">Ödemeyi takiben ortalama 2‑5 dakika içinde otomatik kurulum yapılır ve bilgiler e‑posta ile iletilir.</p>
+          </details>
+          <details class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900">
+            <summary class="cursor-pointer font-medium">Hangi işletim sistemleri mevcut?</summary>
+            <p class="mt-2 text-slate-600 dark:text-slate-300">Ubuntu, Debian, AlmaLinux, Rocky Linux, Windows Server (lisans opsiyonlu) ISO seçenekleri mevcuttur.</p>
+          </details>
+          <details class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900">
+            <summary class="cursor-pointer font-medium">Yedekleme ve snapshot var mı?</summary>
+            <p class="mt-2 text-slate-600 dark:text-slate-300">İsteğe bağlı otomatik yedekleme ve anlık snapshot özelliklerini panel üzerinden yönetebilirsiniz.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- İLETİŞİM -->
+    <section id="iletisim" class="py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid lg:grid-cols-2 gap-8 items-start">
+          <div class="rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow">
+            <h2 class="text-2xl font-bold">Teklif & İletişim</h2>
+            <p class="mt-2 text-slate-600 dark:text-slate-400">WhatsApp üzerinden anında teklif almak için tıklayın veya formu doldurun.</p>
+            <div class="mt-4 flex flex-wrap gap-3">
+              <a href="https://wa.me/900000000000" target="_blank" class="inline-flex items-center gap-2 px-4 py-3 rounded-2xl bg-green-600 text-white hover:bg-green-700"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+              <a href="mailto:satis@ornekdomain.com" class="inline-flex items-center gap-2 px-4 py-3 rounded-2xl border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"><i class="fa-solid fa-envelope"></i> satis@ornekdomain.com</a>
+            </div>
+          </div>
+          <form class="rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow space-y-4" onsubmit="event.preventDefault(); alert('Talebiniz alındı. En kısa sürede dönüş yapacağız.'); this.reset();">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="text-sm">Ad Soyad</label>
+                <input required class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2" placeholder="Adınız Soyadınız" />
+              </div>
+              <div>
+                <label class="text-sm">E‑posta</label>
+                <input type="email" required class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2" placeholder="mail@ornek.com" />
+              </div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="text-sm">Konu</label>
+                <input class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2" placeholder="VPS teklif" />
+              </div>
+              <div>
+                <label class="text-sm">Lokasyon</label>
+                <select class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2">
+                  <option>Türkiye</option>
+                  <option>Almanya</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="text-sm">Not</label>
+              <textarea rows="4" class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2" placeholder="Eklemek istedikleriniz..."></textarea>
+            </div>
+            <button class="w-full px-4 py-3 rounded-2xl bg-sky-600 text-white hover:bg-sky-700"><i class="fa-solid fa-paper-plane mr-2"></i> Gönder</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PAKETLER GÖRÜNÜMÜ (tek başına gösterilir) -->
+  <section id="packagesView" class="hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+      <div class="flex items-end justify-between flex-wrap gap-4 mb-8">
+        <div>
+          <h2 class="text-3xl font-bold">VPS Paketleri</h2>
+          <p class="text-slate-600 dark:text-slate-400">KVM, NVMe SSD, 1 Gbps port, DDoS koruma, anında kurulum.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="showAllBtn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+            <i class="fa-solid fa-arrow-left"></i> Hepsini Göster
+          </button>
+          <div class="inline-flex border border-slate-300 dark:border-slate-700 rounded-xl overflow-hidden">
+            <button data-currency="TRY" class="px-4 py-2 text-sm font-medium bg-white dark:bg-slate-800">TRY</button>
+            <button data-currency="USD" class="px-4 py-2 text-sm font-medium">USD</button>
+            <button data-currency="EUR" class="px-4 py-2 text-sm font-medium">EUR</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paket Kartları & Sihirbaz kapsayıcı -->
+      <div id="packagesGrid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"></div>
+
+      <!-- 3 Adımlı Sihirbaz -->
+      <div id="wizard" class="hidden mt-8">
+        <div class="mb-4 flex items-center gap-2 text-sm">
+          <span class="px-3 py-1 rounded-full border" id="stepDot1">1</span>
+          <span>Plan</span>
+          <span class="opacity-50">›</span>
+          <span class="px-3 py-1 rounded-full border" id="stepDot2">2</span>
+          <span>Yapılandır</span>
+          <span class="opacity-50">›</span>
+          <span class="px-3 py-1 rounded-full border" id="stepDot3">3</span>
+          <span>Sepete Eklendi</span>
+        </div>
+        <!-- Step 1 (Plan seçildi info) -->
+        <div id="step1" class="rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow fade-enter">
+          <h3 class="text-xl font-bold">Seçilen Plan: <span id="chosenPlan" class="text-sky-600">-</span></h3>
+          <p class="text-slate-600 dark:text-slate-400 mt-1">Devam ederek kaynakları özelleştirin.</p>
+          <div class="mt-4 flex gap-3">
+            <button id="toStep2" class="px-4 py-2 rounded-xl bg-sky-600 text-white hover:bg-sky-700">Yapılandır</button>
+            <button id="cancelWizard" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">İptal</button>
+          </div>
+        </div>
+        <!-- Step 2 (Yapılandırma) -->
+        <div id="step2" class="hidden rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow">
+          <div class="grid sm:grid-cols-3 gap-4">
+            <div>
+              <label class="text-sm">RAM</label>
+              <select id="cfgRam" class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2">
+                <option>2 GB</option>
+                <option selected>4 GB</option>
+                <option>8 GB</option>
+                <option>16 GB</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-sm">Disk</label>
+              <select id="cfgDisk" class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2">
+                <option>20 GB NVMe</option>
+                <option selected>40 GB NVMe</option>
+                <option>80 GB NVMe</option>
+                <option>160 GB NVMe</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-sm">İşletim Sistemi</label>
+              <select id="cfgOs" class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2">
+                <option>Ubuntu 24.04</option>
+                <option>Debian 12</option>
+                <option>AlmaLinux 9</option>
+                <option>Windows Server 2022</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-4 flex gap-3">
+            <button id="backTo1" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">Geri</button>
+            <button id="toStep3" class="px-4 py-2 rounded-xl bg-sky-600 text-white hover:bg-sky-700">Sepete Ekle</button>
+          </div>
+        </div>
+        <!-- Step 3 (Sepete eklendi) -->
+        <div id="step3" class="hidden rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow text-center">
+          <i class="fa-solid fa-circle-check text-5xl text-green-600"></i>
+          <h3 class="text-xl font-bold mt-3">Sepete eklendi!</h3>
+          <p id="addedInfo" class="text-slate-600 dark:text-slate-400 mt-1"></p>
+          <div class="mt-4 flex justify-center gap-3">
+            <button id="continueShopping" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">Alışverişe Devam</button>
+            <button id="goCart" class="px-4 py-2 rounded-xl bg-sky-600 text-white hover:bg-sky-700">Sepete Git</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sepet Yan Paneli -->
+  <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-80 translate-x-full transition-transform duration-200 bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl z-[60]">
+    <div class="p-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
+      <h3 class="font-bold">Sepet</h3>
+      <button id="closeCart" class="text-xl">×</button>
+    </div>
+    <div id="cartItems" class="p-4 space-y-3 text-sm">
+      <p class="text-slate-500">Sepetiniz boş.</p>
+    </div>
+    <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+      <div class="flex items-center justify-between mb-3"><span>Ara Toplam</span><span id="cartSubtotal">₺0</span></div>
+      <button class="w-full px-4 py-3 rounded-2xl bg-sky-600 text-white hover:bg-sky-700">Ödeme Adımına Geç</button>
+    </div>
+  </aside>
+
+  <footer class="py-10 border-t border-slate-200 dark:border-slate-800 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-slate-500">© <span id="yil"></span> TurboVPS — Tüm hakları saklıdır.</p>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="#" class="hover:text-sky-600">Gizlilik</a>
+        <a href="#" class="hover:text-sky-600">KVKK</a>
+        <a href="#" class="hover:text-sky-600">Kullanım Şartları</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Yıl
+    document.getElementById('yil').textContent = new Date().getFullYear();
+
+    // Mobil menü
+    const mBtn = document.getElementById('mobileMenuBtn');
+    const mMenu = document.getElementById('mobileMenu');
+    mBtn.addEventListener('click', () => mMenu.classList.toggle('hidden'));
+
+    // Tema toggle (dark / light)
+    const themeBtns = [document.getElementById('themeToggle'), document.getElementById('themeToggleM')];
+    function setTheme(mode){
+      const root = document.documentElement;
+      if(mode === 'dark'){ root.classList.add('dark'); localStorage.setItem('theme','dark'); }
+      else { root.classList.remove('dark'); localStorage.setItem('theme','light'); }
+    }
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme){ setTheme(savedTheme); }
+    themeBtns.forEach(btn => btn && btn.addEventListener('click', ()=>{
+      const isDark = document.documentElement.classList.contains('dark');
+      setTheme(isDark ? 'light' : 'dark');
+    }));
+
+    // ===== Para Birimi ve Kurlar (TRY tabanlı otomatİK çeviri) =====
+    const currencyButtons = document.querySelectorAll('[data-currency]');
+    const headerToggles = [document.getElementById('currencyToggle'), document.getElementById('currencyToggleM')];
+
+    // Varsayılan kurlar (1 USD = 35 TRY, 1 EUR = 38 TRY). İstediğinde güncelleyebilirsin.
+    const defaultRates = { USD: 35, EUR: 38 };
+    let rates = JSON.parse(localStorage.getItem('rates') || JSON.stringify(defaultRates));
+
+    let currentCurrency = localStorage.getItem('currency') || 'TRY';
+
+    function formatPriceTRYto(ccy, tryAmount){
+      if(ccy === 'TRY') return {sign:'₺', value: Math.round(tryAmount)};
+      if(ccy === 'USD') return {sign:'$', value: Math.round(tryAmount / rates.USD)};
+      if(ccy === 'EUR') return {sign:'€', value: Math.round(tryAmount / rates.EUR)};
+      return {sign:'₺', value: tryAmount};
+    }
+
+    function setCurrency(ccy){
+      currentCurrency = ccy;
+      localStorage.setItem('currency', ccy);
+      headerToggles.forEach(b => b && (b.textContent = ccy));
+      // packages fiyatlarını yeniden render et
+      renderPlans();
+      renderCart();
+      // UI highlight
+      currencyButtons.forEach(b => {
+        b.classList.toggle('bg-white', b.dataset.currency === ccy);
+        b.classList.toggle('dark:bg-slate-800', b.dataset.currency === ccy);
+      });
+    }
+
+    function cycleCurrency(){
+      const order = ['TRY','USD','EUR'];
+      const idx = order.indexOf(currentCurrency);
+      const next = order[(idx+1)%order.length];
+      setCurrency(next);
+    }
+
+    headerToggles.forEach(b => b && b.addEventListener('click', cycleCurrency));
+    currencyButtons.forEach(b => b.addEventListener('click', ()=> setCurrency(b.dataset.currency)));
+
+    // ===== Görünüm Geçişleri: Home <-> PackagesView =====
+    const homeView = document.getElementById('homeView');
+    const packagesView = document.getElementById('packagesView');
+    const paketlerBtn = document.getElementById('paketlerBtn');
+    const paketlerBtnM = document.getElementById('paketlerBtnM');
+    const ctaPaketler = document.getElementById('ctaPaketler');
+    const showAllBtn = document.getElementById('showAllBtn');
+    const brandLink = document.getElementById('brandLink');
+
+    function showPackagesOnly(){
+      // hide home with fade
+      homeView.classList.add('fade-exit');
+      homeView.classList.add('fade-exit-active');
+      setTimeout(()=>{
+        homeView.classList.add('hidden');
+        packagesView.classList.remove('hidden');
+        packagesView.classList.add('fade-enter');
+        requestAnimationFrame(()=> packagesView.classList.add('fade-enter-active'));
+        setTimeout(()=> packagesView.classList.remove('fade-enter','fade-enter-active'), 260);
+      }, 200);
+      // mobil menü kapanır
+      mMenu.classList.add('hidden');
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+    function showHomeAll(){
+      packagesView.classList.add('fade-exit','fade-exit-active');
+      setTimeout(()=>{
+        packagesView.classList.add('hidden');
+        homeView.classList.remove('hidden');
+        homeView.classList.add('fade-enter');
+        requestAnimationFrame(()=> homeView.classList.add('fade-enter-active'));
+        setTimeout(()=> homeView.classList.remove('fade-enter','fade-enter-active'), 260);
+      }, 200);
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    paketlerBtn.addEventListener('click', ()=>{ renderPlans(); showPackagesOnly(); });
+    paketlerBtnM.addEventListener('click', ()=>{ renderPlans(); showPackagesOnly(); });
+    ctaPaketler.addEventListener('click', ()=>{ renderPlans(); showPackagesOnly(); });
+    showAllBtn.addEventListener('click', showHomeAll);
+
+    // Marka (PozitifVPS) tıklandığında anasayfa
+    brandLink.addEventListener('click', (e)=>{ e.preventDefault(); showHomeAll(); window.scrollTo({top:0, behavior:'smooth'}); });
+
+    // ===== Planlar (8 kart) =====
+    const plansData = [
+      { name:'Nano', icon:'fa-bolt', tryPrice:109, cpu:'1 vCPU (EPYC)', ram:'1 GB RAM', disk:'15 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
+      { name:'Starter', icon:'fa-bolt', tryPrice:149, cpu:'1 vCPU (EPYC)', ram:'2 GB RAM', disk:'20 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
+      { name:'Pro', icon:'fa-rocket', tryPrice:269, cpu:'2 vCPU (EPYC)', ram:'4 GB RAM', disk:'40 GB NVMe', traffic:'Sınırsız Trafik', featured:true, color:'sky' },
+      { name:'Business', icon:'fa-layer-group', tryPrice:469, cpu:'4 vCPU (EPYC)', ram:'8 GB RAM', disk:'80 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
+      { name:'Enterprise', icon:'fa-crown', tryPrice:899, cpu:'8 vCPU (EPYC)', ram:'16 GB RAM', disk:'160 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
+      { name:'Compute XL', icon:'fa-microchip', tryPrice:1199, cpu:'12 vCPU (EPYC)', ram:'24 GB RAM', disk:'240 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
+      { name:'Storage+', icon:'fa-hard-drive', tryPrice:999, cpu:'4 vCPU (EPYC)', ram:'8 GB RAM', disk:'500 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
+      { name:'Pozitif Max', icon:'fa-fire-flame-curved', tryPrice:1599, cpu:'16 vCPU (EPYC)', ram:'32 GB RAM', disk:'320 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
+    ];
+
+    const packagesGrid = document.getElementById('packagesGrid');
+
+    function planCardHTML(plan){
+      const {sign, value} = formatPriceTRYto(currentCurrency, plan.tryPrice);
+      const ring = plan.featured ? ' ring-2 ring-sky-500 ' : '';
+      return `
+      <div class="plan rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow ${ring}">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl font-bold">${plan.name}</h3>
+          <i class="fa-solid ${plan.icon} text-2xl"></i>
+        </div>
+        <div class="mt-3 text-3xl font-extrabold"><span class="price">${sign}${value}</span><span class="ml-1 text-lg">/ay</span></div>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><i class="fa-solid fa-microchip w-5"></i> ${plan.cpu}</li>
+          <li><i class="fa-solid fa-memory w-5"></i> ${plan.ram}</li>
+          <li><i class="fa-solid fa-hard-drive w-5"></i> ${plan.disk}</li>
+          <li><i class="fa-solid fa-wifi w-5"></i> ${plan.traffic}</li>
+        </ul>
+        <button class="mt-6 w-full px-4 py-3 rounded-2xl ${plan.featured ? 'bg-sky-600 text-white hover:bg-sky-700' : 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:opacity-90'} orderBtn" data-plan="${plan.name}"><i class="fa-solid fa-cart-shopping mr-2"></i> ${plan.featured ? 'En Popüler' : 'Sipariş Ver'}</button>
+      </div>`;
+    }
+
+    function renderPlans(){
+      packagesGrid.innerHTML = plansData.map(planCardHTML).join('');
+      // butonları yeniden bağla
+      document.querySelectorAll('.orderBtn').forEach(btn => {
+        btn.addEventListener('click', ()=>{
+          chosenPlanEl.textContent = btn.dataset.plan;
+          packagesGrid.classList.add('hidden');
+          wizard.classList.remove('hidden');
+          setStep(1);
+        });
+      });
+    }
+
+    // ===== 3 Adımlı Sihirbaz Akışı =====
+    const wizard = document.getElementById('wizard');
+    const chosenPlanEl = document.getElementById('chosenPlan');
+    const toStep2 = document.getElementById('toStep2');
+    const cancelWizard = document.getElementById('cancelWizard');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const backTo1 = document.getElementById('backTo1');
+    const toStep3 = document.getElementById('toStep3');
+    const continueShopping = document.getElementById('continueShopping');
+    const addedInfo = document.getElementById('addedInfo');
+    const goCart = document.getElementById('goCart');
+
+    const stepDots = [
+      document.getElementById('stepDot1'),
+      document.getElementById('stepDot2'),
+      document.getElementById('stepDot3')
+    ];
+
+    function setStep(n){
+      [step1, step2, step3].forEach((el,i)=>{
+        if(i===n-1){ el.classList.remove('hidden'); el.classList.add('fade-enter'); requestAnimationFrame(()=> el.classList.add('fade-enter-active')); setTimeout(()=> el.classList.remove('fade-enter','fade-enter-active'), 260); }
+        else { el.classList.add('hidden'); }
+      });
+      stepDots.forEach((d,i)=>{
+        d.classList.toggle('bg-sky-600', i < n);
+        d.classList.toggle('text-white', i < n);
+        d.classList.toggle('border-sky-600', i < n);
+      });
+    }
+
+    // ===== Sepet =====
+    let cart = [];
+    const cartBtn = document.getElementById('cartBtn');
+    const cartBtnM = document.getElementById('cartBtnM');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const closeCart = document.getElementById('closeCart');
+    const cartItems = document.getElementById('cartItems');
+    const cartSubtotal = document.getElementById('cartSubtotal');
+    const cartCountEls = [document.getElementById('cartCount'), document.getElementById('cartCountM')];
+
+    function renderCart(){
+      if(cart.length === 0){
+        cartItems.innerHTML = '<p class="text-slate-500">Sepetiniz boş.</p>';
+        const {sign} = formatPriceTRYto(currentCurrency, 0);
+        cartSubtotal.textContent = sign + '0';
+      } else {
+        cartItems.innerHTML = '';
+        let subtotalTRY = 0;
+        cart.forEach(item => {
+          const {sign, value} = formatPriceTRYto(currentCurrency, item.baseTry);
+          const row = document.createElement('div');
+          row.className = 'flex items-center justify-between gap-2 border rounded-xl p-3';
+          row.innerHTML = `<div><div class="font-medium">${item.plan}</div><div class="text-xs text-slate-500">${item.ram} / ${item.disk} / ${item.os}</div></div><div class="font-bold">${sign}${value}</div>`;
+          cartItems.appendChild(row);
+          subtotalTRY += item.baseTry;
+        });
+        const {sign, value} = formatPriceTRYto(currentCurrency, subtotalTRY);
+        cartSubtotal.textContent = sign + value;
+      }
+      cartCountEls.forEach(el => el && (el.textContent = String(cart.length)));
+    }
+
+    function openCart(){ cartDrawer.style.transform = 'translateX(0)'; }
+    function closeCartFn(){ cartDrawer.style.transform = 'translateX(100%)'; }
+
+    cartBtn.addEventListener('click', openCart);
+    cartBtnM && cartBtnM.addEventListener('click', openCart);
+    closeCart.addEventListener('click', closeCartFn);
+
+    // Step 2 -> Step 3 (Sepete ekle)
+    toStep2.addEventListener('click', ()=> setStep(2));
+    backTo1.addEventListener('click', ()=> setStep(1));
+    cancelWizard.addEventListener('click', ()=>{ wizard.classList.add('hidden'); packagesGrid.classList.remove('hidden'); });
+
+    toStep3.addEventListener('click', ()=>{
+      const ram = document.getElementById('cfgRam').value;
+      const disk = document.getElementById('cfgDisk').value;
+      const os = document.getElementById('cfgOs').value;
+      const planName = chosenPlanEl.textContent;
+
+      // planın TRY taban fiyatını bul
+      const plan = plansData.find(p => p.name === planName);
+      const baseTry = plan ? plan.tryPrice : 0;
+
+      cart.push({ plan: planName, ram, disk, os, baseTry });
+      renderCart();
+
+      const {sign, value} = formatPriceTRYto(currentCurrency, baseTry);
+      addedInfo.textContent = `${planName} (${ram}, ${disk}, ${os}) ${sign}${value} ile sepetinize eklendi.`;
+      setStep(3);
+    });
+
+    continueShopping.addEventListener('click', ()=>{ wizard.classList.add('hidden'); packagesGrid.classList.remove('hidden'); });
+    goCart.addEventListener('click', ()=>{ openCart(); });
+
+    // Başlangıç:
+    setCurrency(currentCurrency); // fiyatları ve butonları kur
+
+  </script>
+</body>
+</html>
