@@ -17,6 +17,20 @@
     .fade-exit { opacity: 1; transform: translateY(0); }
     .fade-exit-active { opacity: 0; transform: translateY(8px); transition: opacity .2s ease, transform .2s ease; }
     .btn { @apply px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700; }
+
+    /* --------- Yeni: slider ve os-option stilleri --------- */
+    input[type=range] { -webkit-appearance:none; appearance:none; height:10px; background:transparent; }
+    input[type=range]::-webkit-slider-runnable-track { height:10px; background:#e6eef8; border-radius:999px; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; margin-top:-6px; width:20px; height:20px; background:#0ea5e9; border-radius:50%; box-shadow:0 6px 18px rgba(14,165,233,.18); border:3px solid #fff; cursor:pointer; }
+    input[type=range]::-moz-range-track { height:10px; background:#e6eef8; border-radius:999px; }
+    input[type=range]::-moz-range-thumb { width:20px; height:20px; background:#0ea5e9; border-radius:50%; border:3px solid #fff; cursor:pointer; }
+
+    label.os-option { display:block; border:1px solid #e6eef8; border-radius:12px; padding:10px; cursor:pointer; margin-bottom:8px; transition:box-shadow .15s, transform .12s; background:transparent; }
+    label.os-option .os-inner { display:flex; gap:12px; align-items:center; }
+    label.os-option i { font-size:1.6rem; width:2.2rem; text-align:center; }
+    label.os-option .os-meta { display:flex; flex-direction:column; }
+    label.os-option .os-meta .small { font-size:.82rem; color: #64748b; }
+    label.os-option.active { box-shadow:0 6px 18px rgba(14,165,233,.08); border-color:#7dd3fc; background:rgba(14,165,233,.04); transform:translateY(-2px); }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-800 dark:from-slate-950 dark:to-slate-900 dark:text-slate-100">
@@ -260,40 +274,83 @@
             <button id="cancelWizard" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">İptal</button>
           </div>
         </div>
-        <!-- Step 2 (Yapılandırma) -->
+        <!-- Step 2 (Yapılandırma) - REPLACE THIS BLOCK WITH THE FOLLOWING -->
         <div id="step2" class="hidden rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow">
-          <div class="grid sm:grid-cols-3 gap-4">
+          <div class="space-y-4">
             <div>
-              <label class="text-sm">RAM</label>
-              <select id="cfgRam" class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2">
-                <option>2 GB</option>
-                <option selected>4 GB</option>
-                <option>8 GB</option>
-                <option>16 GB</option>
-              </select>
+              <label class="text-sm font-medium block mb-2">Ek RAM (GB)</label>
+              <div class="flex items-center gap-3">
+                <input id="cfgRam" type="range" min="0" max="64" step="1" value="0" class="w-full" />
+                <div id="cfgRamVal" class="w-20 text-right text-sm">0 GB</div>
+              </div>
             </div>
+
             <div>
-              <label class="text-sm">Disk</label>
-              <select id="cfgDisk" class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2">
-                <option>20 GB NVMe</option>
-                <option selected>40 GB NVMe</option>
-                <option>80 GB NVMe</option>
-                <option>160 GB NVMe</option>
-              </select>
+              <label class="text-sm font-medium block mb-2">Ek Disk (GB NVMe)</label>
+              <div class="flex items-center gap-3">
+                <input id="cfgDisk" type="range" min="0" max="640" step="10" value="0" class="w-full" />
+                <div id="cfgDiskVal" class="w-28 text-right text-sm">0 GB</div>
+              </div>
             </div>
+
             <div>
-              <label class="text-sm">İşletim Sistemi</label>
-              <select id="cfgOs" class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-3 py-2">
-                <option>Ubuntu 24.04</option>
-                <option>Debian 12</option>
-                <option>AlmaLinux 9</option>
-                <option>Windows Server 2022</option>
-              </select>
+              <label class="text-sm font-medium block mb-2">İşletim Sistemi</label>
+              <div id="osList" class="mt-1">
+                <label class="os-option" data-value="Ubuntu 24.04">
+                  <input type="radio" name="cfgOs" value="Ubuntu 24.04" checked class="hidden" />
+                  <div class="os-inner">
+                    <i class="fa-brands fa-ubuntu text-orange-500"></i>
+                    <div class="os-meta">
+                      <div class="font-medium">Ubuntu 24.04</div>
+                      <div class="small">Güncel, geniş paket desteği</div>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="os-option" data-value="Debian 12">
+                  <input type="radio" name="cfgOs" value="Debian 12" class="hidden" />
+                  <div class="os-inner">
+                    <i class="fa-brands fa-linux text-slate-700"></i>
+                    <div class="os-meta">
+                      <div class="font-medium">Debian 12</div>
+                      <div class="small">Stabil ve güvenilir</div>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="os-option" data-value="AlmaLinux 9">
+                  <input type="radio" name="cfgOs" value="AlmaLinux 9" class="hidden" />
+                  <div class="os-inner">
+                    <i class="fa-solid fa-layer-group text-indigo-600"></i>
+                    <div class="os-meta">
+                      <div class="font-medium">AlmaLinux 9</div>
+                      <div class="small">RHEL uyumlu, sunucu üretim</div>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="os-option" data-value="Windows Server 2022">
+                  <input type="radio" name="cfgOs" value="Windows Server 2022" class="hidden" />
+                  <div class="os-inner">
+                    <i class="fa-brands fa-windows text-sky-600"></i>
+                    <div class="os-meta">
+                      <div class="font-medium">Windows Server 2022</div>
+                      <div class="small">Lisans ile Windows uygulamaları</div>
+                    </div>
+                  </div>
+                </label>
+              </div>
             </div>
-          </div>
-          <div class="mt-4 flex gap-3">
-            <button id="backTo1" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">Geri</button>
-            <button id="toStep3" class="px-4 py-2 rounded-xl bg-sky-600 text-white hover:bg-sky-700">Sepete Ekle</button>
+
+            <!-- Canlı fiyat artışı önizlemesi -->
+            <div class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+              Seçilen ekstra maliyet: <span id="cfgPriceDelta" class="font-semibold">₺0</span>
+            </div>
+
+            <div class="mt-4 flex gap-3">
+              <button id="backTo1" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">Geri</button>
+              <button id="toStep3" class="px-4 py-2 rounded-xl bg-sky-600 text-white hover:bg-sky-700">Sepete Ekle</button>
+            </div>
           </div>
         </div>
         <!-- Step 3 (Sepete eklendi) -->
@@ -504,7 +561,27 @@
         });
       });
     }
-
+    // Yeni: OS option görsel toggling ve toStep3 içindeki os okuma değişikliği
+    (function wireOsOptions(){
+      const osRadios = document.querySelectorAll('input[name="cfgOs"]');
+      const labels = document.querySelectorAll('label.os-option');
+      function refreshActive(){
+        labels.forEach(l => l.classList.remove('active'));
+        const sel = document.querySelector('input[name="cfgOs"]:checked');
+        if(sel){
+          const lab = sel.closest('label.os-option');
+          if(lab) lab.classList.add('active');
+        }
+      }
+      labels.forEach(l => {
+        l.addEventListener('click', ()=> {
+          const r = l.querySelector('input[name="cfgOs"]');
+          if(r){ r.checked = true; refreshActive(); }
+        });
+      });
+      osRadios.forEach(r => r.addEventListener('change', refreshActive));
+      refreshActive();
+    })();
     // ===== 3 Adımlı Sihirbaz Akışı =====
     const wizard = document.getElementById('wizard');
     const chosenPlanEl = document.getElementById('chosenPlan');
@@ -582,39 +659,94 @@
     backTo1.addEventListener('click', ()=> setStep(1));
     cancelWizard.addEventListener('click', ()=>{ wizard.classList.add('hidden'); packagesGrid.classList.remove('hidden'); });
 
-    toStep3.addEventListener('click', ()=>{
-      const ram = document.getElementById('cfgRam').value;
-      const disk = document.getElementById('cfgDisk').value;
-      const os = document.getElementById('cfgOs').value;
+    // Step2 slider canlı güncelleme ve fiyat önizlemesi
+    const cfgRamEl = document.getElementById('cfgRam');
+    const cfgDiskEl = document.getElementById('cfgDisk');
+    const cfgRamVal = document.getElementById('cfgRamVal');
+    const cfgDiskVal = document.getElementById('cfgDiskVal');
+    const cfgPriceDelta = document.getElementById('cfgPriceDelta');
+
+    function updateCfgPreview(){
+      const ramGB = Number(cfgRamEl.value || 0);
+      const diskGB = Number(cfgDiskEl.value || 0);
+      cfgRamVal.textContent = `${ramGB} GB`;
+      cfgDiskVal.textContent = `${diskGB} GB`;
+      const extraTRY = (ramGB * EXTRA_RAM_PRICE_PER_GB_TRY) + (diskGB * EXTRA_DISK_PRICE_PER_GB_TRY);
+      const {sign, value} = formatPriceTRYto(currentCurrency, extraTRY);
+      cfgPriceDelta.textContent = `${sign}${value}`;
+    }
+
+    // event bağla
+    cfgRamEl && cfgRamEl.addEventListener('input', updateCfgPreview);
+    cfgDiskEl && cfgDiskEl.addEventListener('input', updateCfgPreview);
+    // ilk güncelleme
+    updateCfgPreview();
+
+    // yardımcı: plan.ram / plan.disk içinden sayı çek (ör. "16 GB RAM" -> 16)
+    function parseGBFromLabel(label){
+      const m = String(label).match(/(\d+)\s*GB/i);
+      return m ? parseInt(m[1],10) : 0;
+    }
+
+    // Step 2 -> Step 3 (Sepete ekle) — slider değerlerini kullanacak şekilde
+    // Önce varsa eski listener'ı temizle (tekrar bağlanma sorununu engellemek için)
+    if (toStep3._bound) { toStep3.removeEventListener('click', toStep3._bound); toStep3._bound = null; }
+    toStep3._bound = function(){
+      const ramExtraGB = Number(cfgRamEl.value || 0);   // ekstra GB (slider)
+      const diskExtraGB = Number(cfgDiskEl.value || 0);
+      const os = (document.querySelector('input[name="cfgOs"]:checked') || {value: 'Windows 11'}).value;
       const planName = chosenPlanEl.textContent;
 
-      // planın TRY taban fiyatını bul
+      // planın TRY taban fiyatını ve base kaynaklarını bul
       const plan = plansData.find(p => p.name === planName);
-      const baseTry = plan ? plan.tryPrice : 0;
+      const baseTry = plan ? Number(plan.tryPrice || 0) : 0;
+      const baseRamNum = parseGBFromLabel(plan ? plan.ram : '0 GB');
+      const baseDiskNum = parseGBFromLabel(plan ? plan.disk : '0 GB');
 
-      function parseGB(str){
-        const m = String(str).match(/(\d+)\s*GB/i);
-        return m ? parseInt(m[1],10) : 0;
-      }
+      // toplam kaynakları hesapla (additive)
+      const totalRamNum = baseRamNum + ramExtraGB;
+      const totalDiskNum = baseDiskNum + diskExtraGB;
 
-      // seçilen miktar (seçim "ekstra" olarak değerlendirilir)
-      const selRamNum = parseGB(ram);
-      const selDiskNum = parseGB(disk);
+      const totalRamLabel = `${totalRamNum} GB RAM`;
+      const totalDiskLabel = `${totalDiskNum} GB NVMe`;
 
-      // ek maliyeti hesapla
-      const extraCostTRY = (selRamNum * EXTRA_RAM_PRICE_PER_GB_TRY) + (selDiskNum * EXTRA_DISK_PRICE_PER_GB_TRY);
+      // ek maliyeti hesapla (sadece seçilen ekstra için)
+      const extraCostTRY = (ramExtraGB * EXTRA_RAM_PRICE_PER_GB_TRY) + (diskExtraGB * EXTRA_DISK_PRICE_PER_GB_TRY);
 
-      // toplam TRY fiyatı
+      // toplam TRY fiyatı (base + ek)
       const totalTry = baseTry + extraCostTRY;
 
-      // sepete ekle (hem baseTry hem totalTry saklanıyor)
-      cart.push({ plan: planName, ram, disk, os, baseTry, extraCostTRY, totalTry });
+      // sepete ekle (toplam etiketleri ve fiyat bilgisi ile)
+      cart.push({
+        plan: planName,
+        ram: totalRamLabel,
+        disk: totalDiskLabel,
+        os,
+        baseTry,
+        extraRamGB: ramExtraGB,
+        extraDiskGB: diskExtraGB,
+        extraCostTRY,
+        totalTry
+      });
       renderCart();
 
       const {sign: s1, value: v1} = formatPriceTRYto(currentCurrency, extraCostTRY);
       const {sign: s2, value: v2} = formatPriceTRYto(currentCurrency, totalTry);
-      addedInfo.textContent = `${planName} (${ram}, ${disk}, ${os}) eklendi — Artış: ${s1}${v1}, Toplam: ${s2}${v2}.`;
+      addedInfo.textContent = `${planName} eklendi — Toplam: ${totalRamLabel}, ${totalDiskLabel}, ${os}. Artış: ${s1}${v1}, Toplam Fiyat: ${s2}${v2}.`;
       setStep(3);
+    };
+    toStep3.addEventListener('click', toStep3._bound);
+
+    // Devam / Sepete Git butonları (wizard altındaki)
+    continueShopping && continueShopping.addEventListener('click', () => {
+      wizard.classList.add('hidden');
+      packagesGrid.classList.remove('hidden');
+      // paketler bölümüne kaydır
+      setTimeout(()=> window.scrollTo({ top: packagesGrid.getBoundingClientRect().top + window.scrollY - 60, behavior: 'smooth' }), 50);
+    });
+
+    goCart && goCart.addEventListener('click', () => {
+      openCart();
     });
     // Başlangıç:
     setCurrency(currentCurrency); // fiyatları ve butonları kur
