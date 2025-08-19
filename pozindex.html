@@ -274,9 +274,9 @@
             <button id="cancelWizard" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">İptal</button>
           </div>
         </div>
-        <!-- Step 2 (Yapılandırma) - REPLACE THIS BLOCK WITH THE FOLLOWING -->
+        <!-- Step 2 (Yapılandırma) -->
         <div id="step2" class="hidden rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow">
-          <div class="space-y-4">
+          <div class="space-y-6">
             <div>
               <label class="text-sm font-medium block mb-2">Ek RAM (GB)</label>
               <div class="flex items-center gap-3">
@@ -296,13 +296,14 @@
             <div>
               <label class="text-sm font-medium block mb-2">İşletim Sistemi</label>
               <div id="osList" class="mt-1">
+                <!-- Linux seçenekleri (ücretsiz) -->
                 <label class="os-option" data-value="Ubuntu 24.04">
                   <input type="radio" name="cfgOs" value="Ubuntu 24.04" checked class="hidden" />
                   <div class="os-inner">
                     <i class="fa-brands fa-ubuntu text-orange-500"></i>
                     <div class="os-meta">
                       <div class="font-medium">Ubuntu 24.04</div>
-                      <div class="small">Güncel, geniş paket desteği</div>
+                      <div class="small">Güncel, geniş paket desteği — Ücretsiz</div>
                     </div>
                   </div>
                 </label>
@@ -313,7 +314,7 @@
                     <i class="fa-brands fa-linux text-slate-700"></i>
                     <div class="os-meta">
                       <div class="font-medium">Debian 12</div>
-                      <div class="small">Stabil ve güvenilir</div>
+                      <div class="small">Stabil ve güvenilir — Ücretsiz</div>
                     </div>
                   </div>
                 </label>
@@ -324,7 +325,21 @@
                     <i class="fa-solid fa-layer-group text-indigo-600"></i>
                     <div class="os-meta">
                       <div class="font-medium">AlmaLinux 9</div>
-                      <div class="small">RHEL uyumlu, sunucu üretim</div>
+                      <div class="small">RHEL uyumlu — Ücretsiz</div>
+                    </div>
+                  </div>
+                </label>
+
+                <!-- Windows seçenekleri (ücretli -> gösterimde sabit 1000₺, arka planda mapping ile değiştirilebilir) -->
+                <div class="mt-2 mb-1 text-sm font-medium">Windows Sunucular (Lisans ücreti: ₺1000)</div>
+
+                <label class="os-option" data-value="Windows Server 2025">
+                  <input type="radio" name="cfgOs" value="Windows Server 2025" class="hidden" />
+                  <div class="os-inner">
+                    <i class="fa-brands fa-windows text-sky-600"></i>
+                    <div class="os-meta">
+                      <div class="font-medium">Windows Server 2025 <span class="text-xs text-slate-600">₺1000</span></div>
+                      <div class="small">Lisanslı Windows</div>
                     </div>
                   </div>
                 </label>
@@ -334,13 +349,34 @@
                   <div class="os-inner">
                     <i class="fa-brands fa-windows text-sky-600"></i>
                     <div class="os-meta">
-                      <div class="font-medium">Windows Server 2022</div>
-                      <div class="small">Lisans ile Windows uygulamaları</div>
+                      <div class="font-medium">Windows Server 2022 <span class="text-xs text-slate-600">₺1000</span></div>
+                      <div class="small">Lisanslı Windows</div>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="os-option" data-value="Windows Server 2019">
+                  <input type="radio" name="cfgOs" value="Windows Server 2019" class="hidden" />
+                  <div class="os-inner">
+                    <i class="fa-brands fa-windows text-sky-600"></i>
+                    <div class="os-meta">
+                      <div class="font-medium">Windows Server 2019 <span class="text-xs text-slate-600">₺1000</span></div>
+                      <div class="small">Lisanslı Windows</div>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="os-option" data-value="Windows Server 2012">
+                  <input type="radio" name="cfgOs" value="Windows Server 2012" class="hidden" />
+                  <div class="os-inner">
+                    <i class="fa-brands fa-windows text-sky-600"></i>
+                    <div class="os-meta">
+                      <div class="font-medium">Windows Server 2012 <span class="text-xs text-slate-600">₺1000</span></div>
+                      <div class="small">Lisanslı Windows</div>
                     </div>
                   </div>
                 </label>
               </div>
-            </div>
 
             <!-- Canlı fiyat artışı önizlemesi -->
             <div class="mt-2 text-sm text-slate-600 dark:text-slate-400">
@@ -384,7 +420,7 @@
 
   <footer class="py-10 border-t border-slate-200 dark:border-slate-800 mt-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <p class="text-sm text-slate-500">© <span id="yil"></span> TurboVPS — Tüm hakları saklıdır.</p>
+      <p class="text-sm text-slate-500">© <span id="yil"></span> PozitifVPS — Tüm hakları saklıdır.</p>
       <div class="flex items-center gap-4 text-sm">
         <a href="#" class="hover:text-sky-600">Gizlilik</a>
         <a href="#" class="hover:text-sky-600">KVKK</a>
@@ -511,8 +547,19 @@
       { name:'Enterprise', icon:'fa-crown', tryPrice:35000, cpu:'8 vCPU (EPYC)', ram:'32 GB RAM', disk:'640 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
     ];
     // ===== Ek fiyatlar (Ram ve SSD kart) =====
+    // ===== Ek fiyatlar (Ram ve SSD kart) =====
     const EXTRA_RAM_PRICE_PER_GB_TRY = 1000;   // ayarla: 1 GB RAM için TRY fiyatı
     const EXTRA_DISK_PRICE_PER_GB_TRY = 50;     // ayarla: 1 GB NVMe için TRY fiyatı
+    // Windows sürümleri ve lisans ücreti (kolayca değiştirilebilir)
+    const WINDOWS_OS_EXTRA = {
+      'Windows Server 2025': 1000,  // buradan Windows lisans ücretlerini ayarlayabilirsiniz
+      'Windows Server 2022': 1000,
+      'Windows Server 2019': 1000,
+      'Windows Server 2012': 1000
+    };
+    function getOsExtraCost(osName){
+      return Number(WINDOWS_OS_EXTRA[osName] || 0);
+    }
 
     const packagesGrid = document.getElementById('packagesGrid');
 
@@ -561,27 +608,7 @@
         });
       });
     }
-    // Yeni: OS option görsel toggling ve toStep3 içindeki os okuma değişikliği
-    (function wireOsOptions(){
-      const osRadios = document.querySelectorAll('input[name="cfgOs"]');
-      const labels = document.querySelectorAll('label.os-option');
-      function refreshActive(){
-        labels.forEach(l => l.classList.remove('active'));
-        const sel = document.querySelector('input[name="cfgOs"]:checked');
-        if(sel){
-          const lab = sel.closest('label.os-option');
-          if(lab) lab.classList.add('active');
-        }
-      }
-      labels.forEach(l => {
-        l.addEventListener('click', ()=> {
-          const r = l.querySelector('input[name="cfgOs"]');
-          if(r){ r.checked = true; refreshActive(); }
-        });
-      });
-      osRadios.forEach(r => r.addEventListener('change', refreshActive));
-      refreshActive();
-    })();
+
     // ===== 3 Adımlı Sihirbaz Akışı =====
     const wizard = document.getElementById('wizard');
     const chosenPlanEl = document.getElementById('chosenPlan');
@@ -595,6 +622,9 @@
     const continueShopping = document.getElementById('continueShopping');
     const addedInfo = document.getElementById('addedInfo');
     const goCart = document.getElementById('goCart');
+
+    // Step 3'teki butonları görünür yap (default hidden)
+    step3.querySelectorAll('button').forEach(btn => btn.style.display = '');
 
     const stepDots = [
       document.getElementById('stepDot1'),
@@ -654,66 +684,91 @@
     cartBtnM && cartBtnM.addEventListener('click', openCart);
     closeCart.addEventListener('click', closeCartFn);
 
-    // Step 2 -> Step 3 (Sepete ekle)
-    toStep2.addEventListener('click', ()=> setStep(2));
-    backTo1.addEventListener('click', ()=> setStep(1));
-    cancelWizard.addEventListener('click', ()=>{ wizard.classList.add('hidden'); packagesGrid.classList.remove('hidden'); });
-
-    // Step2 slider canlı güncelleme ve fiyat önizlemesi
-    const cfgRamEl = document.getElementById('cfgRam');
-    const cfgDiskEl = document.getElementById('cfgDisk');
+    // ===== Step 2 Slider ve OS Seçim Event Handlers =====
+    const cfgRam = document.getElementById('cfgRam');
+    const cfgDisk = document.getElementById('cfgDisk');
     const cfgRamVal = document.getElementById('cfgRamVal');
     const cfgDiskVal = document.getElementById('cfgDiskVal');
     const cfgPriceDelta = document.getElementById('cfgPriceDelta');
+    const osOptions = document.querySelectorAll('.os-option');
 
-    function updateCfgPreview(){
-      const ramGB = Number(cfgRamEl.value || 0);
-      const diskGB = Number(cfgDiskEl.value || 0);
-      cfgRamVal.textContent = `${ramGB} GB`;
-      cfgDiskVal.textContent = `${diskGB} GB`;
-      const extraTRY = (ramGB * EXTRA_RAM_PRICE_PER_GB_TRY) + (diskGB * EXTRA_DISK_PRICE_PER_GB_TRY);
-      const {sign, value} = formatPriceTRYto(currentCurrency, extraTRY);
-      cfgPriceDelta.textContent = `${sign}${value}`;
+    function updateConfigUI(){
+      const ram = Number(cfgRam.value);
+      const disk = Number(cfgDisk.value);
+      const selectedOs = document.querySelector('input[name="cfgOs"]:checked').value;
+      
+      cfgRamVal.textContent = ram + ' GB';
+      cfgDiskVal.textContent = disk + ' GB';
+
+      const ramCost = ram * EXTRA_RAM_PRICE_PER_GB_TRY;
+      const diskCost = disk * EXTRA_DISK_PRICE_PER_GB_TRY;
+      const osCost = getOsExtraCost(selectedOs);
+      const totalExtra = ramCost + diskCost + osCost;
+
+      const {sign, value} = formatPriceTRYto(currentCurrency, totalExtra);
+      cfgPriceDelta.textContent = sign + value;
     }
 
-    // event bağla
-    cfgRamEl && cfgRamEl.addEventListener('input', updateCfgPreview);
-    cfgDiskEl && cfgDiskEl.addEventListener('input', updateCfgPreview);
-    // ilk güncelleme
-    updateCfgPreview();
+    cfgRam.addEventListener('input', updateConfigUI);
+    cfgDisk.addEventListener('input', updateConfigUI);
 
-    // yardımcı: plan.ram / plan.disk içinden sayı çek (ör. "16 GB RAM" -> 16)
-    function parseGBFromLabel(label){
-      const m = String(label).match(/(\d+)\s*GB/i);
-      return m ? parseInt(m[1],10) : 0;
-    }
+    // OS seçenekleri için görsel geri bildirim
+    osOptions.forEach(option => {
+      const radio = option.querySelector('input[type="radio"]');
+      radio.addEventListener('change', () => {
+        osOptions.forEach(opt => opt.classList.remove('active'));
+        if(radio.checked) {
+          option.classList.add('active');
+          updateConfigUI();
+        }
+      });
+    });
 
-    // Step 2 -> Step 3 (Sepete ekle) — slider değerlerini kullanacak şekilde
-    // Önce varsa eski listener'ı temizle (tekrar bağlanma sorununu engellemek için)
-    if (toStep3._bound) { toStep3.removeEventListener('click', toStep3._bound); toStep3._bound = null; }
-    toStep3._bound = function(){
-      const ramExtraGB = Number(cfgRamEl.value || 0);   // ekstra GB (slider)
-      const diskExtraGB = Number(cfgDiskEl.value || 0);
-      const os = (document.querySelector('input[name="cfgOs"]:checked') || {value: 'Windows 11'}).value;
+    // Adım geçişleri
+    toStep2.addEventListener('click', ()=> setStep(2));
+    backTo1.addEventListener('click', ()=> setStep(1));
+    cancelWizard.addEventListener('click', ()=>{ 
+      wizard.classList.add('hidden'); 
+      packagesGrid.classList.remove('hidden'); 
+    });
+
+    toStep3.addEventListener('click', ()=>{
+      // Seçimleri al
+      const ram = document.getElementById('cfgRam').value;
+      const disk = document.getElementById('cfgDisk').value;
+      const os = document.querySelector('input[name="cfgOs"]:checked').value;
       const planName = chosenPlanEl.textContent;
 
       // planın TRY taban fiyatını ve base kaynaklarını bul
       const plan = plansData.find(p => p.name === planName);
-      const baseTry = plan ? Number(plan.tryPrice || 0) : 0;
-      const baseRamNum = parseGBFromLabel(plan ? plan.ram : '0 GB');
-      const baseDiskNum = parseGBFromLabel(plan ? plan.disk : '0 GB');
+      const baseTry = plan ? plan.tryPrice : 0;
 
-      // toplam kaynakları hesapla (additive)
-      const totalRamNum = baseRamNum + ramExtraGB;
-      const totalDiskNum = baseDiskNum + diskExtraGB;
+      function parseGB(str){
+        const m = String(str).match(/(\d+)\s*GB/i);
+        return m ? parseInt(m[1],10) : 0;
+      }
+
+      // base kaynaklar (ör: "16 GB RAM" -> 16)
+      const baseRamNum = parseGB(plan ? plan.ram : '0 GB');
+      const baseDiskNum = parseGB(plan ? plan.disk : '0 GB');
+
+      // Slider'dan gelen değerleri direkt kullan (zaten extra değerler)
+      const selRamNum = parseInt(ram, 10);
+      const selDiskNum = parseInt(disk, 10);
+
+      // toplam kaynakları hesapla (base + extra)
+      const totalRamNum = baseRamNum + selRamNum;
+      const totalDiskNum = baseDiskNum + selDiskNum;
 
       const totalRamLabel = `${totalRamNum} GB RAM`;
       const totalDiskLabel = `${totalDiskNum} GB NVMe`;
 
-      // ek maliyeti hesapla (sadece seçilen ekstra için)
-      const extraCostTRY = (ramExtraGB * EXTRA_RAM_PRICE_PER_GB_TRY) + (diskExtraGB * EXTRA_DISK_PRICE_PER_GB_TRY);
+      // ek maliyeti hesapla (RAM/SSD + Windows lisans)
+      const extraHwCostTRY = (selRamNum * EXTRA_RAM_PRICE_PER_GB_TRY) + (selDiskNum * EXTRA_DISK_PRICE_PER_GB_TRY);
+      const osExtraCostTRY = getOsExtraCost(os);
+      const extraCostTRY = extraHwCostTRY + osExtraCostTRY;
 
-      // toplam TRY fiyatı (base + ek)
+      // Toplam TRY fiyat
       const totalTry = baseTry + extraCostTRY;
 
       // sepete ekle (toplam etiketleri ve fiyat bilgisi ile)
@@ -723,8 +778,8 @@
         disk: totalDiskLabel,
         os,
         baseTry,
-        extraRamGB: ramExtraGB,
-        extraDiskGB: diskExtraGB,
+        extraRamGB: selRamNum,
+        extraDiskGB: selDiskNum,
         extraCostTRY,
         totalTry
       });
@@ -734,18 +789,27 @@
       const {sign: s2, value: v2} = formatPriceTRYto(currentCurrency, totalTry);
       addedInfo.textContent = `${planName} eklendi — Toplam: ${totalRamLabel}, ${totalDiskLabel}, ${os}. Artış: ${s1}${v1}, Toplam Fiyat: ${s2}${v2}.`;
       setStep(3);
-    };
-    toStep3.addEventListener('click', toStep3._bound);
-
-    // Devam / Sepete Git butonları (wizard altındaki)
-    continueShopping && continueShopping.addEventListener('click', () => {
+    });
+    // Step 3 butonları
+    continueShopping.addEventListener('click', () => {
+      // wizard kapat, paketler görünür yap
       wizard.classList.add('hidden');
       packagesGrid.classList.remove('hidden');
-      // paketler bölümüne kaydır
+      // Yapılandırma seçimlerini sıfırla
+      cfgRam.value = 0;
+      cfgDisk.value = 0;
+      document.querySelector('input[name="cfgOs"][value="Ubuntu 24.04"]').checked = true;
+      document.querySelectorAll('.os-option').forEach(opt => opt.classList.remove('active'));
+      document.querySelector('.os-option[data-value="Ubuntu 24.04"]').classList.add('active');
+      updateConfigUI();
+      // paketler alanına kaydır
       setTimeout(()=> window.scrollTo({ top: packagesGrid.getBoundingClientRect().top + window.scrollY - 60, behavior: 'smooth' }), 50);
     });
 
-    goCart && goCart.addEventListener('click', () => {
+    goCart.addEventListener('click', () => {
+      // wizard'ı kapat, sepeti aç
+      wizard.classList.add('hidden');
+      packagesGrid.classList.remove('hidden');
       openCart();
     });
     // Başlangıç:
