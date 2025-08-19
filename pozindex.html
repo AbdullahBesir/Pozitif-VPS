@@ -27,7 +27,7 @@
         <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow">
           <i class="fa-solid fa-server"></i>
         </span>
-        <span>Pozitif VPS</span>
+        <span>Pozitif VPS<i style="font-size: 0.8em;"> / Yıllık VPS Sunucu Sağlayıcınız</i></span>
       </a>
       <nav class="hidden md:flex items-center gap-6 text-sm">
         <a href="#ozellikler" class="hover:text-sky-600">Özellikler</a>
@@ -237,7 +237,7 @@
       </div>
 
       <!-- Paket Kartları & Sihirbaz kapsayıcı -->
-      <div id="packagesGrid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"></div>
+      <div id="packagesGrid" class="grid gap-6 sm:grid-cols-3 lg:grid-cols-3"></div>
 
       <!-- 3 Adımlı Sihirbaz -->
       <div id="wizard" class="hidden mt-8">
@@ -447,14 +447,11 @@
 
     // ===== Planlar (8 kart) =====
     const plansData = [
-      { name:'Nano', icon:'fa-bolt', tryPrice:109, cpu:'1 vCPU (EPYC)', ram:'1 GB RAM', disk:'15 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
-      { name:'Starter', icon:'fa-bolt', tryPrice:149, cpu:'1 vCPU (EPYC)', ram:'2 GB RAM', disk:'20 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
-      { name:'Pro', icon:'fa-rocket', tryPrice:269, cpu:'2 vCPU (EPYC)', ram:'4 GB RAM', disk:'40 GB NVMe', traffic:'Sınırsız Trafik', featured:true, color:'sky' },
-      { name:'Business', icon:'fa-layer-group', tryPrice:469, cpu:'4 vCPU (EPYC)', ram:'8 GB RAM', disk:'80 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
-      { name:'Enterprise', icon:'fa-crown', tryPrice:899, cpu:'8 vCPU (EPYC)', ram:'16 GB RAM', disk:'160 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
-      { name:'Compute XL', icon:'fa-microchip', tryPrice:1199, cpu:'12 vCPU (EPYC)', ram:'24 GB RAM', disk:'240 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
-      { name:'Storage+', icon:'fa-hard-drive', tryPrice:999, cpu:'4 vCPU (EPYC)', ram:'8 GB RAM', disk:'500 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
-      { name:'Pozitif Max', icon:'fa-fire-flame-curved', tryPrice:1599, cpu:'16 vCPU (EPYC)', ram:'32 GB RAM', disk:'320 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
+      { name:'Mini', icon:'fa-bolt', tryPrice:4000, cpu:'1 vCPU (EPYC)', ram:'2 GB RAM', disk:'40 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
+      { name:'Starter', icon:'fa-bolt', tryPrice:7000, cpu:'2 vCPU (EPYC)', ram:'4 GB RAM', disk:'80 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
+      { name:'Master', icon:'fa-rocket', tryPrice:12500, cpu:'4 vCPU (EPYC)', ram:'8 GB RAM', disk:'160 GB NVMe', traffic:'Sınırsız Trafik', featured:true, color:'sky' },
+      { name:'Business', icon:'fa-layer-group', tryPrice:20000, cpu:'6 vCPU (EPYC)', ram:'16 GB RAM', disk:'320 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
+      { name:'Enterprise', icon:'fa-crown', tryPrice:35000, cpu:'8 vCPU (EPYC)', ram:'32 GB RAM', disk:'640 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
     ];
 
     const packagesGrid = document.getElementById('packagesGrid');
@@ -463,12 +460,12 @@
       const {sign, value} = formatPriceTRYto(currentCurrency, plan.tryPrice);
       const ring = plan.featured ? ' ring-2 ring-sky-500 ' : '';
       return `
-      <div class="plan rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow ${ring}">
+      <div class="plan w-full sm:w-80 rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow ${ring}">
         <div class="flex items-center justify-between">
           <h3 class="text-xl font-bold">${plan.name}</h3>
           <i class="fa-solid ${plan.icon} text-2xl"></i>
         </div>
-        <div class="mt-3 text-3xl font-extrabold"><span class="price">${sign}${value}</span><span class="ml-1 text-lg">/ay</span></div>
+        <div class="mt-3 text-3xl font-extrabold"><span class="price">${sign}${value}</span><span class="ml-1 text-lg">/yıl</span></div>
         <ul class="mt-4 space-y-2 text-sm">
           <li><i class="fa-solid fa-microchip w-5"></i> ${plan.cpu}</li>
           <li><i class="fa-solid fa-memory w-5"></i> ${plan.ram}</li>
@@ -480,7 +477,20 @@
     }
 
     function renderPlans(){
-      packagesGrid.innerHTML = plansData.map(planCardHTML).join('');
+      const topItems = plansData.slice(0,3);
+      const bottomItems = plansData.slice(3);
+
+      const topHTML = topItems.map(planCardHTML).join('');
+      const bottomHTML = bottomItems.length ? bottomItems.map(planCardHTML).join('') : '';
+
+      // Her iki satırı da tüm grid genişliğini kaplayan bir wrapper içinde flex ile ortalıyoruz
+      packagesGrid.innerHTML = `
+        <div class="col-span-1 sm:col-span-3 flex flex-wrap justify-center gap-6">
+          ${topHTML}
+        </div>
+        ${ bottomHTML ? `<div class="col-span-1 sm:col-span-3 flex flex-wrap justify-center gap-6 mt-3">${bottomHTML}</div>` : '' }
+      `;
+
       // butonları yeniden bağla
       document.querySelectorAll('.orderBtn').forEach(btn => {
         btn.addEventListener('click', ()=>{
