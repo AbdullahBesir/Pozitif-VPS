@@ -453,6 +453,9 @@
       { name:'Business', icon:'fa-layer-group', tryPrice:20000, cpu:'6 vCPU (EPYC)', ram:'16 GB RAM', disk:'320 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
       { name:'Enterprise', icon:'fa-crown', tryPrice:35000, cpu:'8 vCPU (EPYC)', ram:'32 GB RAM', disk:'640 GB NVMe', traffic:'Sınırsız Trafik', featured:false, color:'slate' },
     ];
+    // ===== Ek fiyatlar (Ram ve SSD kart) =====
+    const EXTRA_RAM_PRICE_PER_GB_TRY = 1000;   // ayarla: 1 GB RAM için TRY fiyatı
+    const EXTRA_DISK_PRICE_PER_GB_TRY = 50;     // ayarla: 1 GB NVMe için TRY fiyatı
 
     const packagesGrid = document.getElementById('packagesGrid');
 
@@ -553,12 +556,13 @@
         cartItems.innerHTML = '';
         let subtotalTRY = 0;
         cart.forEach(item => {
-          const {sign, value} = formatPriceTRYto(currentCurrency, item.baseTry);
+          const priceTRY = (typeof item.totalTry === 'number') ? item.totalTry : item.baseTry;
+          const {sign, value} = formatPriceTRYto(currentCurrency, priceTRY);
           const row = document.createElement('div');
           row.className = 'flex items-center justify-between gap-2 border rounded-xl p-3';
           row.innerHTML = `<div><div class="font-medium">${item.plan}</div><div class="text-xs text-slate-500">${item.ram} / ${item.disk} / ${item.os}</div></div><div class="font-bold">${sign}${value}</div>`;
           cartItems.appendChild(row);
-          subtotalTRY += item.baseTry;
+          subtotalTRY += priceTRY;
         });
         const {sign, value} = formatPriceTRYto(currentCurrency, subtotalTRY);
         cartSubtotal.textContent = sign + value;
@@ -588,17 +592,30 @@
       const plan = plansData.find(p => p.name === planName);
       const baseTry = plan ? plan.tryPrice : 0;
 
-      cart.push({ plan: planName, ram, disk, os, baseTry });
+      function parseGB(str){
+        const m = String(str).match(/(\d+)\s*GB/i);
+        return m ? parseInt(m[1],10) : 0;
+      }
+
+      // seçilen miktar (seçim "ekstra" olarak değerlendirilir)
+      const selRamNum = parseGB(ram);
+      const selDiskNum = parseGB(disk);
+
+      // ek maliyeti hesapla
+      const extraCostTRY = (selRamNum * EXTRA_RAM_PRICE_PER_GB_TRY) + (selDiskNum * EXTRA_DISK_PRICE_PER_GB_TRY);
+
+      // toplam TRY fiyatı
+      const totalTry = baseTry + extraCostTRY;
+
+      // sepete ekle (hem baseTry hem totalTry saklanıyor)
+      cart.push({ plan: planName, ram, disk, os, baseTry, extraCostTRY, totalTry });
       renderCart();
 
-      const {sign, value} = formatPriceTRYto(currentCurrency, baseTry);
-      addedInfo.textContent = `${planName} (${ram}, ${disk}, ${os}) ${sign}${value} ile sepetinize eklendi.`;
+      const {sign: s1, value: v1} = formatPriceTRYto(currentCurrency, extraCostTRY);
+      const {sign: s2, value: v2} = formatPriceTRYto(currentCurrency, totalTry);
+      addedInfo.textContent = `${planName} (${ram}, ${disk}, ${os}) eklendi — Artış: ${s1}${v1}, Toplam: ${s2}${v2}.`;
       setStep(3);
     });
-
-    continueShopping.addEventListener('click', ()=>{ wizard.classList.add('hidden'); packagesGrid.classList.remove('hidden'); });
-    goCart.addEventListener('click', ()=>{ openCart(); });
-
     // Başlangıç:
     setCurrency(currentCurrency); // fiyatları ve butonları kur
 
